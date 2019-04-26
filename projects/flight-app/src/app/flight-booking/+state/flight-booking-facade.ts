@@ -1,4 +1,4 @@
-import { FlightsLoaded } from './flight-booking.actions';
+import { loadFlights } from './flight-booking.actions';
 import { Observable } from 'rxjs';
 import { FlightService, Flight } from '@flight-workspace/flight-api';
 import { Injectable } from '@angular/core';
@@ -9,7 +9,7 @@ import { getFlights } from './flight-booking.selectors';
 @Injectable({
   providedIn: 'root'
 })
-export class FlightBookingFacadeService {
+export class FlightBookingFacade {
   
   delay(): void {
     alert('not implemented');
@@ -23,9 +23,6 @@ export class FlightBookingFacadeService {
     }
 
     find(from: string, to: string, urgent: boolean) {
-      this.flightService.find(from, to, urgent).subscribe(
-        flights => this.store.dispatch(new FlightsLoaded({flights})),
-        err => console.error('err', err)
-      )
+      this.store.dispatch(loadFlights({from, to, urgent}));
     }
 }

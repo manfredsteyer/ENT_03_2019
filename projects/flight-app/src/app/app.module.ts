@@ -26,7 +26,6 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { PassengersModule } from './passengers/passengers.module';
 import { HeaderInterceptor } from './shared/auth/auth.interceptor';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { OAuthModule } from 'angular-oauth2-oidc';
 
@@ -56,7 +55,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 
     PassengersModule,
 
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
     AppComponent,

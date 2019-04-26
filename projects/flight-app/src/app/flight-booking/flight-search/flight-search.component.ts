@@ -1,12 +1,7 @@
-import { FlightsLoaded, LoadFlights } from './../+state/flight-booking.actions';
 import { Observable } from 'rxjs';
-import {Component, OnInit} from '@angular/core';
-import {FlightService, Flight} from '@flight-workspace/flight-api';
-import { AppState } from '../../+state';
-import { Store } from '@ngrx/store';
-import { FlightBookingAppState } from '../+state/flight-booking.reducer';
-import { getFlights } from '../+state/flight-booking.selectors';
-import { FlightBookingFacadeService } from '../+state/flight-booking-facade.service';
+import { Component, OnInit } from '@angular/core';
+import { FlightService, Flight } from '@flight-workspace/flight-api';
+import { FlightBookingFacade } from '../+state/flight-booking-facade';
 
 @Component({
   selector: 'flight-search',
@@ -32,7 +27,7 @@ export class FlightSearchComponent implements OnInit {
   };
 
   constructor(
-    private flightBookingFacade: FlightBookingFacadeService,
+    private flightBookingFacade: FlightBookingFacade,
     private flightService: FlightService) {
   }
 

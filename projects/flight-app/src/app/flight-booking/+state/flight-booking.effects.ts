@@ -1,34 +1,25 @@
-import { FlightService } from './../../../../../flight-api/src/lib/services/flight.service';
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 
-import { FlightBookingActionTypes, LoadFlights, FlightsLoaded } from './flight-booking.actions';
+import { map, switchMap, catchError } from 'rxjs/operators';
+import { loadFlights, flightsLoaded } from './flight-booking.actions';
+import { FlightService } from '@flight-workspace/flight-api';
 import { of } from 'rxjs';
-
 
 @Injectable()
 export class FlightBookingEffects {
 
-  @Effect()
-  loadFlights$ = this.actions$.pipe(
-                    ofType<LoadFlights>(FlightBookingActionTypes.LoadFlights),
-                    switchMap(a => 
-                      this
-                        .flightService
-                        .find(
-                          a.payload.from, 
-                          a.payload.to, 
-                          a.payload.urgent
-                        )
-                        .pipe(
-                          catchError(err => of([]))
-                        )),
-                    map(flights => new FlightsLoaded({flights}))
-                );
+  loadFlights = createEffect(() => 
+    this.actions$.pipe(
+      ofType(loadFlights), 
+      switchMap(a => this.flightService.find(
+        a.from, 
+        a.to, 
+        a.urgent).pipe(catchError(err => of([])))),
+      map(flights => flightsLoaded({flights}))));
 
   constructor(
-    private flightService: FlightService,
-    private actions$: Actions) {}
+    private actions$: Actions,
+    private flightService: FlightService) {}
 
 }

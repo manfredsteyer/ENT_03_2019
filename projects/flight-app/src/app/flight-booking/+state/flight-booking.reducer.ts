@@ -1,8 +1,7 @@
-import { AppState } from './../../+state/index';
-import { FlightBookingActions, FlightBookingActionTypes } from './flight-booking.actions';
+import { createReducer, on } from "@ngrx/store";
+import { loadFlights, flightsLoaded } from './flight-booking.actions';
+import { AppState } from "../../+state";
 import { Flight } from '@flight-workspace/flight-api';
-import produce from 'immer';
-
 
 export const FLIGHT_BOOKING_BRANCH_NAME = 'flightBooking';
 
@@ -12,32 +11,21 @@ export interface FlightBookingAppState extends AppState {
 
 export interface FlightBookingState {
   flights: Flight[],
-  stats: object,
-  basket: object,
   blackList: number[]
 }
 
 export const initialState: FlightBookingState = {
   flights: [],
-  stats: {},
-  basket: {},
   blackList: [5]
 };
 
-export const flightBookingReducer = (state = initialState, action: FlightBookingActions): FlightBookingState => {
-  switch (action.type) {
-
-    case FlightBookingActionTypes.FlightsLoaded: {
-      const flights = action.payload.flights; 
-      
-      return { ...state, flights };
-    }
-
-    case FlightBookingActionTypes.LoadFlights: {
-      return { ...state, flights: [] };
-    }
-
-    default:
-      return state;
-  }
-}
+export const flightBookingReducer = createReducer(
+  initialState,
+  on(loadFlights, (state, action) => {
+    return { ...state, flights: [] };
+  }),
+  on(flightsLoaded, (state, action) => {
+    const flights = action.flights;
+    return { ...state, flights };
+  })
+)
