@@ -24,30 +24,20 @@ export const initialState: FlightBookingState = {
   blackList: [5]
 };
 
-export const flightBookingReducer = produce((state, action: FlightBookingActions): FlightBookingState => {
+export const flightBookingReducer = (state = initialState, action: FlightBookingActions): FlightBookingState => {
   switch (action.type) {
 
     case FlightBookingActionTypes.FlightsLoaded: {
       const flights = action.payload.flights; 
-      state.flights = flights; 
-      break;
-    }
-
-    case FlightBookingActionTypes.UpdateFlight: {
-      const flight = action.payload.flight; 
-      const flights = state.flights;
-
-      // Mutable
-      const idx = flights.findIndex(f => f.id === flight.id);
-      flights[idx] = flight;
-      break;
+      
+      return { ...state, flights };
     }
 
     case FlightBookingActionTypes.LoadFlights: {
-      state.flights = [];
+      return { ...state, flights: [] };
     }
 
     default:
       return state;
   }
-}, initialState);
+}

@@ -1,11 +1,10 @@
-import { FlightsLoaded, UpdateFlight } from './flight-booking.actions';
+import { FlightsLoaded } from './flight-booking.actions';
 import { Observable } from 'rxjs';
 import { FlightService, Flight } from '@flight-workspace/flight-api';
 import { Injectable } from '@angular/core';
 import { FlightBookingAppState } from './flight-booking.reducer';
 import { Store } from '@ngrx/store';
 import { getFlights } from './flight-booking.selectors';
-import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +12,7 @@ import { take } from 'rxjs/operators';
 export class FlightBookingFacadeService {
   
   delay(): void {
-  
-    this.flights$.pipe(take(1)).subscribe(flights => {
-      const flight = flights[0];
-
-      const date = new Date(flight.date);
-      const newDate = new Date(date.getTime() + 15 * 60 * 1000);
-      const newFlight = {...flight, date: newDate.toISOString() };
-
-      this.store.dispatch(new UpdateFlight({flight: newFlight}));
-    });
-
+    alert('not implemented');
   }
 
   flights$: Observable<Flight[]>;
@@ -39,5 +28,4 @@ export class FlightBookingFacadeService {
         err => console.error('err', err)
       )
     }
-
 }

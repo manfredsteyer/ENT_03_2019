@@ -1,7 +1,7 @@
 import { CustomCheckboxModule } from './custom-checkbox/custom-checkbox.module';
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ModuleWithProviders} from '@angular/core/src/metadata/ng_module';
+import {ModuleWithProviders} from '@angular/core';
 import {CityPipe} from './pipes/city.pipe';
 import { TabsModule } from './tabs/tabs.module';
 
